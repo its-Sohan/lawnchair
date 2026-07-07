@@ -16,9 +16,12 @@
 
 package app.lawnchair.ui.preferences.components
 
+import android.Manifest
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import androidx.compose.foundation.clickable
@@ -38,6 +41,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Lifecycle
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
@@ -154,11 +158,17 @@ fun isNotificationServiceEnabled(context: Context): Boolean {
         "enabled_notification_listeners",
     )
     val myListener = ComponentName(context, NotificationListener::class.java)
-    return enabledListeners != null &&
+    val listenerEnabled = enabledListeners != null &&
         (
             enabledListeners.contains(myListener.flattenToString()) ||
                 enabledListeners.contains(myListener.flattenToShortString())
             )
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return listenerEnabled &&
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) ==
+            PackageManager.PERMISSION_GRANTED
+    }
+    return listenerEnabled
 }
 
 @Composable

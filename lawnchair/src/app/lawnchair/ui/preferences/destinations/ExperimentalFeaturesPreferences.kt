@@ -95,6 +95,13 @@ fun ExperimentalFeaturesPreferences(
             }
             Item {
                 SwitchPreference(
+                    adapter = prefs2.performanceMode.getAdapter(),
+                    label = "Performance mode",
+                    description = "Reduces animations and visual effects for smoother performance on lower-end devices",
+                )
+            }
+            Item {
+                SwitchPreference(
                     checked = hasPermission && enableWallpaperBlur.state.value,
                     onCheckedChange = {
                         if (!hasPermission) {
