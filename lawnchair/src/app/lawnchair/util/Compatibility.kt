@@ -52,6 +52,14 @@ private fun checkMeizuStock(): Boolean = when {
     else -> false
 }
 
+private fun checkTecnoStock(): Boolean = when {
+    getSystemProperty("ro.build.version.hios", "").isNotEmpty() -> true
+    getSystemProperty("ro.tecnos.ui.version", "").isNotEmpty() -> true
+    else -> false
+}
+
+val isTecnoStock = checkTecnoStock()
+
 private fun checkGestureNavContract(): Boolean = when {
     !Utilities.ATLEAST_Q -> false
     checkOnePlusStock() -> false
@@ -60,6 +68,7 @@ private fun checkGestureNavContract(): Boolean = when {
     checkHuaweiHonorStock() -> false
     checkOppoStock() -> false
     checkMeizuStock() -> false
+    checkTecnoStock() -> false
     else -> true
 }
 

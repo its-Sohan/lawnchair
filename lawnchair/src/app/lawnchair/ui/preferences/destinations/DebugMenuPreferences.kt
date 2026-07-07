@@ -3,6 +3,8 @@ package app.lawnchair.ui.preferences.destinations
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.hardware.display.DisplayManager
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.Composable
@@ -161,6 +163,55 @@ fun DebugMenuPreferences(
             }
 
             val apmSupport = context.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED
+
+            PreferenceGroup(heading = "Device info") {
+                Item {
+                    ClickablePreference(
+                        label = "Manufacturer",
+                        subtitle = Build.MANUFACTURER,
+                    ) { }
+                }
+                Item {
+                    ClickablePreference(
+                        label = "Model",
+                        subtitle = Build.MODEL,
+                    ) { }
+                }
+                Item {
+                    ClickablePreference(
+                        label = "Hardware",
+                        subtitle = Build.HARDWARE,
+                    ) { }
+                }
+                Item {
+                    ClickablePreference(
+                        label = "Display refresh rate",
+                        subtitle = runCatching {
+                            val dm = context.getSystemService(DisplayManager::class.java)
+                            dm?.getDisplay(android.view.Display.DEFAULT_DISPLAY)?.refreshRate
+                                ?.let { "${it.toInt()} Hz" } ?: "Unknown"
+                        }.getOrDefault("Unknown"),
+                    ) { }
+                }
+                Item {
+                    val totalMemMb = runCatching {
+                        val memInfo = android.app.ActivityManager.MemoryInfo()
+                        (context.getSystemService(android.app.ActivityManager::class.java))?.getMemoryInfo(memInfo)
+                        "${memInfo.totalMem / (1024 * 1024)} MB"
+                    }.getOrDefault("Unknown")
+                    ClickablePreference(
+                        label = "Total RAM",
+                        subtitle = totalMemMb,
+                    ) { }
+                }
+                Item {
+                    ClickablePreference(
+                        label = "Android version",
+                        subtitle = "${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})",
+                    ) { }
+                }
+            }
+
             PreferenceGroup(heading = "Supported features") {
                 Item {
                     ClickablePreference(

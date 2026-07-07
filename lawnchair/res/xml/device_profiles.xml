@@ -113,6 +113,16 @@
             launcher:allAppsCellHeight="104"
             launcher:canBeDefault="true" />
 
+        <display-option
+            launcher:name="Tecno Spark 40 5G"
+            launcher:minWidthDps="360"
+            launcher:minHeightDps="780"
+            launcher:iconImageSize="60"
+            launcher:iconTextSize="13.0"
+            launcher:allAppsBorderSpace="16"
+            launcher:allAppsCellHeight="104"
+            launcher:canBeDefault="true" />
+
     </grid-option>
 
     <grid-option
