@@ -51,8 +51,8 @@ import app.lawnchair.ui.popup.LauncherOptionsPopup
 import app.lawnchair.ui.popup.toOptionOrderString
 import app.lawnchair.ui.preferences.components.HiddenAppsInSearch
 import app.lawnchair.ui.preferences.data.liveinfo.LiveInformationManager
-import app.lawnchair.util.kotlinxJson
 import app.lawnchair.util.isTecnoStock
+import app.lawnchair.util.kotlinxJson
 import app.lawnchair.views.overlay.FullScreenOverlayMode
 import com.android.launcher3.BuildConfig
 import com.android.launcher3.InvariantDeviceProfile
