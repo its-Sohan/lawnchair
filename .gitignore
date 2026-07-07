@@ -9,6 +9,7 @@ WallpaperPicker/gen
 WallpaperPicker/.project.properties
 bin
 .idea
+.settings
 .gradle
 .kotlin
 local.properties
